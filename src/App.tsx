@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import "./App.css";
+import { StyledApp } from "./App.style";
 import { questions } from "./questionsData";
+import { cleanQuestionNumber } from "./utils";
 
 function App() {
   const [index, setIndex] = useState(0);
+  const [message, setMessage] = useState('')
   const [finished, setFinished] = useState(false);
 
   const questionsRef = useRef({ available: [...Array(36).keys()] });
@@ -28,21 +30,15 @@ function App() {
     questionsRef.current.available = questionsRef.current.available.filter(
       (x) => x !== index
     );
+    const nextMessage = cleanQuestionNumber(questions[index])
+    setMessage(nextMessage);
   }, [index]);
 
-  console.log(questionsRef.current.available);
-
   return (
-    <div className="App">
-      <h1>{finished ? "End game" : questions[index]}</h1>
-      <div className="card">
-        {finished ? (
-          <button onClick={startOver}>start over</button>
-        ) : (
-          <button onClick={handleOnClick}>random</button>
-        )}
-      </div>
-    </div>
+    <StyledApp onClick={handleOnClick}>
+      <h1>{message}</h1>
+      {finished && <button onClick={startOver}>start over</button>}
+    </StyledApp>
   );
 }
 
