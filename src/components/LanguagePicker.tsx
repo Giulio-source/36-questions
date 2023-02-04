@@ -1,6 +1,7 @@
+import { gsap } from "gsap";
 import { useContext } from "react";
 import styled from "styled-components";
-import { AppContext } from "../context/AppContext";
+import { AppContext, LanguageType } from "../context/AppContext";
 
 const StyledLanguagePicker = styled.div`
   display: flex;
@@ -11,20 +12,34 @@ const StyledLanguagePicker = styled.div`
 export const LanguagePicker = ({ onNext }: { onNext: () => void }) => {
   const { onChangeLang } = useContext(AppContext);
 
+  function handleOnClick(lang: LanguageType) {
+    gsap
+      .timeline()
+      .to("#language-picker button", {
+        y: "random(30, 80)",
+        autoAlpha: 0,
+        duration: 2,
+        ease: "easeInOut",
+      })
+      .to({}, { duration: 1 })
+      .then(() => {
+        onChangeLang(lang);
+        onNext();
+      });
+  }
+
   return (
-    <StyledLanguagePicker>
+    <StyledLanguagePicker id="language-picker">
       <button
         onClick={() => {
-          onChangeLang("en");
-          onNext();
+          handleOnClick("en");
         }}
       >
         English
       </button>
       <button
         onClick={() => {
-          onChangeLang("it");
-          onNext();
+          handleOnClick("it");
         }}
       >
         Italiano

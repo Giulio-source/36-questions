@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     background: ${Colors.black};
     color: ${Colors.white};
     text-align: center;
-    font-family: "Italiana", monospace;
+    font-family: 'Josefin Sans', sans-serif;  
     overflow: hidden;
   }
 
@@ -21,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
     background: transparent;
     color: inherit;
     border: 1px solid ${Colors.white};
-    padding: 12px 24px;
+    padding: 16px 24px;
     font-size: 18px;
     cursor: pointer;
     text-transform: uppercase;

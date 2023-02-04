@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { StyledApp } from "./App.style";
+import { StyledApp, StyledQuestion } from "./App.style";
 import { LanguagePicker } from "./components/LanguagePicker";
 import { AppContext } from "./context/AppContext";
 import { languageData } from "./data/languageData";
@@ -48,7 +48,9 @@ function App() {
       {step === "language" && (
         <LanguagePicker onNext={() => setStep("question")} />
       )}
-      {step === "question" && <h1 onClick={handleOnClick}>{message}</h1>}
+      {step === "question" && (
+        <StyledQuestion onClick={handleOnClick}>{message}</StyledQuestion>
+      )}
       {step === "end-game" && (
         <>
           <h1 onClick={handleOnClick}>{message}</h1>
