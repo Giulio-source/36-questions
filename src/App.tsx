@@ -1,8 +1,11 @@
+import { gsap } from "gsap";
+import { TextPlugin } from "gsap/TextPlugin";
 import { useContext, useEffect, useRef, useState } from "react";
-import { StyledApp, StyledQuestion } from "./App.style";
+import { StyledApp } from "./App.style";
+import { EndGame } from "./components/EndGame";
 import { LanguagePicker } from "./components/LanguagePicker";
+import { Question } from "./components/Question";
 import { AppContext } from "./context/AppContext";
-import { languageData } from "./data/languageData";
 import { questions } from "./data/questionsData";
 
 function App() {
@@ -16,25 +19,44 @@ function App() {
 
   const { lang } = useContext(AppContext);
 
-  function handleOnClick() {
-    if (questionsRef.current.available.length === 0) {
-      setMessage(languageData.endGame[lang]);
+  // function handleOnClick() {
+  //   if (questionsRef.current.available.length === 0) {
+  //     setStep("end-game");
+  //   }
+  //   const random = Math.floor(
+  //     Math.random() * questionsRef.current.available.length
+  //   );
+  //   setIndex(questionsRef.current.available[random]);
+  // }]
+
+  function onNext() {
+    if (index === 35) {
       setStep("end-game");
+      return;
     }
-    const random = Math.floor(
-      Math.random() * questionsRef.current.available.length
-    );
-    setIndex(questionsRef.current.available[random]);
+    setIndex((prev) => (prev += 1));
+  }
+
+  function onPrev() {
+    if (index === 0) {
+      setStep("language");
+      return;
+    }
+    setIndex((prev) => (prev -= 1));
   }
 
   function startOver() {
     questionsRef.current.available = [...Array(36).keys()];
     setIndex(0);
-    setStep("question");
+    setStep("language");
   }
 
   useEffect(() => {
-    if (index !== undefined) {
+    gsap.registerPlugin(TextPlugin);
+  }, []);
+
+  useEffect(() => {
+    if (index !== undefined && lang && step === "question") {
       questionsRef.current.available = questionsRef.current.available.filter(
         (x) => x !== index
       );
@@ -44,19 +66,19 @@ function App() {
   }, [index, lang]);
 
   return (
-    <StyledApp>
+    <StyledApp id='app'>
       {step === "language" && (
         <LanguagePicker onNext={() => setStep("question")} />
       )}
       {step === "question" && (
-        <StyledQuestion onClick={handleOnClick}>{message}</StyledQuestion>
+        <Question
+          message={message}
+          questionNumber={index + 1}
+          onNext={onNext}
+          onPrev={onPrev}
+        />
       )}
-      {step === "end-game" && (
-        <>
-          <h1 onClick={handleOnClick}>{message}</h1>
-          <button onClick={startOver}>{languageData.startOver[lang]}</button>
-        </>
-      )}
+      {step === "end-game" && <EndGame startOver={startOver} />}
     </StyledApp>
   );
 }
