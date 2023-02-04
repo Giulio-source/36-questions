@@ -1,18 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { StyledApp } from "./App.style";
-import { questions } from "./questionsData";
-import { cleanQuestionNumber } from "./utils";
+import { LanguagePicker } from "./components/LanguagePicker";
+import { AppContext } from "./context/AppContext";
+import { languageData } from "./data/languageData";
+import { questions } from "./data/questionsData";
 
 function App() {
+  const [step, setStep] = useState<"language" | "question" | "end-game">(
+    "language"
+  );
   const [index, setIndex] = useState(0);
-  const [message, setMessage] = useState('')
-  const [finished, setFinished] = useState(false);
+  const [message, setMessage] = useState("");
 
   const questionsRef = useRef({ available: [...Array(36).keys()] });
 
+  const { lang } = useContext(AppContext);
+
   function handleOnClick() {
     if (questionsRef.current.available.length === 0) {
-      setFinished(true);
+      setMessage(languageData.endGame[lang]);
+      setStep("end-game");
     }
     const random = Math.floor(
       Math.random() * questionsRef.current.available.length
@@ -23,21 +30,31 @@ function App() {
   function startOver() {
     questionsRef.current.available = [...Array(36).keys()];
     setIndex(0);
-    setFinished(false);
+    setStep("question");
   }
 
   useEffect(() => {
-    questionsRef.current.available = questionsRef.current.available.filter(
-      (x) => x !== index
-    );
-    const nextMessage = cleanQuestionNumber(questions[index])
-    setMessage(nextMessage);
-  }, [index]);
+    if (index !== undefined) {
+      questionsRef.current.available = questionsRef.current.available.filter(
+        (x) => x !== index
+      );
+      const nextMessage = questions[index][lang];
+      setMessage(nextMessage);
+    }
+  }, [index, lang]);
 
   return (
-    <StyledApp onClick={handleOnClick}>
-      <h1>{message}</h1>
-      {finished && <button onClick={startOver}>start over</button>}
+    <StyledApp>
+      {step === "language" && (
+        <LanguagePicker onNext={() => setStep("question")} />
+      )}
+      {step === "question" && <h1 onClick={handleOnClick}>{message}</h1>}
+      {step === "end-game" && (
+        <>
+          <h1 onClick={handleOnClick}>{message}</h1>
+          <button onClick={startOver}>{languageData.startOver[lang]}</button>
+        </>
+      )}
     </StyledApp>
   );
 }

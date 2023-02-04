@@ -23,5 +23,7 @@ export const GlobalStyle = createGlobalStyle`
     border: 1px solid ${Colors.white};
     padding: 12px 24px;
     font-size: 18px;
+    cursor: pointer;
+    text-transform: uppercase;
   }
 `;
