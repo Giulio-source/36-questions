@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledApp = styled.div`
   max-width: min(80vw, 400px);
-  height: 90vh;
+  height: 80vh;
   margin: auto;
 
   display: flex;
