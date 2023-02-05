@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyledApp } from "./App.style";
 import { EndGame } from "./components/EndGame";
 import { LanguagePicker } from "./components/LanguagePicker";
@@ -15,19 +15,7 @@ function App() {
   const [index, setIndex] = useState(0);
   const [message, setMessage] = useState("");
 
-  const questionsRef = useRef({ available: [...Array(36).keys()] });
-
   const { lang } = useContext(AppContext);
-
-  // function handleOnClick() {
-  //   if (questionsRef.current.available.length === 0) {
-  //     setStep("end-game");
-  //   }
-  //   const random = Math.floor(
-  //     Math.random() * questionsRef.current.available.length
-  //   );
-  //   setIndex(questionsRef.current.available[random]);
-  // }]
 
   function onNext() {
     if (index === 35) {
@@ -46,7 +34,6 @@ function App() {
   }
 
   function startOver() {
-    questionsRef.current.available = [...Array(36).keys()];
     setIndex(0);
     setStep("language");
   }
@@ -57,16 +44,13 @@ function App() {
 
   useEffect(() => {
     if (index !== undefined && lang && step === "question") {
-      questionsRef.current.available = questionsRef.current.available.filter(
-        (x) => x !== index
-      );
       const nextMessage = questions[index][lang];
       setMessage(nextMessage);
     }
-  }, [index, lang]);
+  }, [index, lang, step]);
 
   return (
-    <StyledApp id='app'>
+    <StyledApp id="app">
       {step === "language" && (
         <LanguagePicker onNext={() => setStep("question")} />
       )}

@@ -25,6 +25,12 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 18px;
     cursor: pointer;
     text-transform: uppercase;
+    transition: all 0.3s;
+
+    &:active {
+      background: ${Colors.white};
+      color: ${Colors.black};
+    }
   }
 
   h1 {
