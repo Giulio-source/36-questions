@@ -17,7 +17,10 @@ const StyledQuestion = styled.div`
   position: relative;
 `;
 
-const StyledQuestionMessage = styled.h1``;
+const StyledQuestionMessage = styled.h1`
+  opacity: 0;
+  visibility: hidden;
+`;
 
 const StyledQuestionNumber = styled.div`
   position: absolute;
@@ -58,7 +61,7 @@ export const Question = ({
   function handleOnNext() {
     gsap
       .timeline()
-      .to("#question-container", {
+      .to("#question-container, #question-number", {
         autoAlpha: 0,
         duration: 1,
         ease: "power4.out",
@@ -82,13 +85,15 @@ export const Question = ({
   useEffect(() => {
     gsap
       .timeline()
+      .add("start")
       .fromTo(
         "#question-container",
         { text: "", autoAlpha: 1 },
         {
           text: { value: message, speed: 1 },
           ease: "none",
-        }
+        },
+        "start"
       )
       .fromTo(
         "#button-navigation button",
@@ -101,14 +106,29 @@ export const Question = ({
           duration: 2,
           ease: "power4.out",
         },
-        "<"
+        "start"
+      )
+      .fromTo(
+        "#question-number",
+        {
+          autoAlpha: 0,
+        },
+        {
+          y: 0,
+          autoAlpha: 0.1,
+          duration: 2,
+          ease: "power4.out",
+        },
+        "start"
       );
   }, [message]);
 
   return (
     <StyledQuestionWrapper>
       <StyledQuestion style={{ position: "relative" }}>
-        <StyledQuestionNumber>{questionNumber}</StyledQuestionNumber>
+        <StyledQuestionNumber id="question-number">
+          {questionNumber}
+        </StyledQuestionNumber>
         <StyledQuestionMessage id="question-container" />
       </StyledQuestion>
       <StyledNavigation id="button-navigation">

@@ -3,15 +3,17 @@ import { TextPlugin } from "gsap/TextPlugin";
 import { useContext, useEffect, useState } from "react";
 import { StyledApp } from "./App.style";
 import { EndGame } from "./components/EndGame";
+import { Instructions } from "./components/Instructions";
+import { Introduction } from "./components/Introduction";
 import { LanguagePicker } from "./components/LanguagePicker";
 import { Question } from "./components/Question";
 import { AppContext } from "./context/AppContext";
 import { questions } from "./data/questionsData";
 
 function App() {
-  const [step, setStep] = useState<"language" | "question" | "end-game">(
-    "language"
-  );
+  const [step, setStep] = useState<
+    "language" | "introduction" | "instructions" | "question" | "end-game"
+  >("language");
   const [index, setIndex] = useState(0);
   const [message, setMessage] = useState("");
 
@@ -52,7 +54,13 @@ function App() {
   return (
     <StyledApp id="app">
       {step === "language" && (
-        <LanguagePicker onNext={() => setStep("question")} />
+        <LanguagePicker onNext={() => setStep("introduction")} />
+      )}
+      {step === "introduction" && (
+        <Introduction onNext={() => setStep("instructions")} />
+      )}
+      {step === "instructions" && (
+        <Instructions onNext={() => setStep("question")} />
       )}
       {step === "question" && (
         <Question

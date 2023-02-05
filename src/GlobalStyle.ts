@@ -26,10 +26,15 @@ export const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     text-transform: uppercase;
     transition: all 0.3s;
+    width: 100%;
 
     &:active {
       background: ${Colors.white};
       color: ${Colors.black};
+    }
+
+    svg {
+      width: 32px;
     }
   }
 
@@ -40,6 +45,16 @@ export const GlobalStyle = createGlobalStyle`
 
   @media screen and (min-width: 1024px) {
     font-size: 32px;
+  }
+  }
+
+  p {
+    line-height: 130%;
+    font-size: 18px;
+    margin: 0;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 18px;
   }
   }
 `;
