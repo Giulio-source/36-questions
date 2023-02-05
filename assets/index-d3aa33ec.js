@@ -196,7 +196,7 @@ Error generating stack: `+u.message+`
 
   p {
     line-height: 130%;
-    font-size: 18px;
+    font-size: 16px;
     margin: 0;
 
   @media screen and (min-width: 1024px) {
