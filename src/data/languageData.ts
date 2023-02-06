@@ -28,7 +28,7 @@ export const languageData = {
     en: "What are the 36 Questions?",
   },
   intro1: {
-    it: "Le cosiddette 36 domande per innamorarsi sono un insieme di domande sviluppate negli anni '90 dai psicologi Arthur Aron, Ph.D., Elaine Aron, Ph.D. e da altri ricercatori per vedere se due estranei possono sviluppare una connessione intima semplicemente facendosi reciprocamente una serie di domande sempre più personali.",
+    it: "Le cosiddette 36 domande per innamorarsi sono un insieme di domande sviluppate negli anni '90 dagli psicologi Arthur Aron, Ph.D., Elaine Aron, Ph.D. e da altri ricercatori per vedere se due estranei possono sviluppare una connessione intima semplicemente facendosi reciprocamente una serie di domande sempre più personali.",
     en: "The so-called 36 questions to fall in love are a set of questions developed in the 1990s by psychologists Arthur Aron, Ph.D., Elaine Aron, Ph.D., and other researchers to see if two strangers can develop an intimate connection just from asking each other a series of increasingly personal questions.",
   },
   intro2: {
