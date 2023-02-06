@@ -2,6 +2,7 @@ import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 import { useContext, useEffect, useState } from "react";
 import { StyledApp } from "./App.style";
+import { Cover } from "./components/Cover";
 import { EndGame } from "./components/EndGame";
 import { Instructions } from "./components/Instructions";
 import { Introduction } from "./components/Introduction";
@@ -12,18 +13,19 @@ import { questions } from "./data/questionsData";
 
 function App() {
   const [step, setStep] = useState<
-    "language" | "introduction" | "instructions" | "question" | "end-game"
-  >("language");
+    | "cover"
+    | "language"
+    | "introduction"
+    | "instructions"
+    | "question"
+    | "end-game"
+  >("cover");
   const [index, setIndex] = useState(0);
   const [message, setMessage] = useState("");
 
   const { lang } = useContext(AppContext);
 
   function onNext() {
-    if (index === 35) {
-      setStep("end-game");
-      return;
-    }
     setIndex((prev) => (prev += 1));
   }
 
@@ -37,7 +39,7 @@ function App() {
 
   function startOver() {
     setIndex(0);
-    setStep("language");
+    setStep("cover");
   }
 
   useEffect(() => {
@@ -46,13 +48,18 @@ function App() {
 
   useEffect(() => {
     if (index !== undefined && lang && step === "question") {
-      const nextMessage = questions[index][lang];
-      setMessage(nextMessage);
+      if (index >= 35) {
+        setStep("end-game");
+      } else {
+        const nextMessage = questions[index][lang];
+        setMessage(nextMessage);
+      }
     }
   }, [index, lang, step]);
 
   return (
     <StyledApp id="app">
+      {step === "cover" && <Cover onNext={() => setStep("language")} />}
       {step === "language" && (
         <LanguagePicker onNext={() => setStep("introduction")} />
       )}

@@ -15,12 +15,13 @@ export const StyledInstructions = styled.div`
   flex-direction: column;
 
   section {
+    position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    gap: 32px;
+    gap: 24px;
   }
 `;
 
@@ -34,7 +35,17 @@ export const Instructions = ({ onNext }: { onNext: () => void }) => {
         autoAlpha: 0,
         duration: 2,
       })
-      .to({}, { duration: 1 })
+      .to(
+        "#instructions button",
+        {
+          y: "random(-50, 50)",
+          autoAlpha: 0,
+          duration: 2,
+          ease: "power4.out",
+        },
+        "<"
+      )
+      .to({}, { duration: 0.5 })
       .then(() => onNext());
   }
 

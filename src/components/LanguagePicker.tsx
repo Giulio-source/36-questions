@@ -23,7 +23,7 @@ export const LanguagePicker = ({ onNext }: { onNext: () => void }) => {
         duration: 2,
         ease: "power4.out",
       })
-      .to({}, { duration: 1 })
+      .to({}, { duration: 0.5 })
       .then(() => {
         onChangeLang(lang);
         onNext();

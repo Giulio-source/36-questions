@@ -41,6 +41,7 @@ export const GlobalStyle = createGlobalStyle`
   h1 {
     line-height: 130%;
     font-size: 24px;
+    font-weight: 400;
     margin: 0;
 
   @media screen and (min-width: 1024px) {

@@ -22,7 +22,7 @@ const StyledQuestionMessage = styled.h1`
   visibility: hidden;
 `;
 
-const StyledQuestionNumber = styled.div`
+export const StyledQuestionNumber = styled.div`
   position: absolute;
   left: 50%;
   top: 50%;
@@ -76,7 +76,7 @@ export const Question = ({
         },
         "<"
       )
-      .to({}, { duration: 1 })
+      .to({}, { duration: 0.5 })
       .then(() => {
         onNext();
       });
@@ -114,7 +114,6 @@ export const Question = ({
           autoAlpha: 0,
         },
         {
-          y: 0,
           autoAlpha: 0.1,
           duration: 2,
           ease: "power4.out",

@@ -18,7 +18,17 @@ export const Introduction = ({ onNext }: { onNext: () => void }) => {
         autoAlpha: 0,
         duration: 2,
       })
-      .to({}, { duration: 1 })
+      .to(
+        "#introduction button",
+        {
+          y: "random(0, 50)",
+          autoAlpha: 0,
+          duration: 2,
+          ease: "power4.out",
+        },
+        "<"
+      )
+      .to({}, { duration: 0.5 })
       .then(() => onNext());
   }
 
