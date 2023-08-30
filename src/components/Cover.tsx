@@ -10,7 +10,7 @@ export const StyledTitle = styled.div`
   line-height: 130%; */
   text-transform: capitalize;
   font-weight: 700;
-  font-size: 64px;
+  font-size: 48px;
   letter-spacing: -2px;
   line-height: 80%;
 `;
@@ -48,7 +48,7 @@ export const Cover = ({ onNext }: { onNext: () => void }) => {
         "#cover-title",
         { text: "", autoAlpha: 1 },
         {
-          text: { value: "The 36 Questions to fall in love.", speed: 1 },
+          text: { value: "36 Questions for Deeper Conversations.", speed: 1 },
           ease: "none",
         },
         "-=1"

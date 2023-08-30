@@ -3,7 +3,6 @@ import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { AppContext } from "../context/AppContext";
 import { languageData } from "../data/languageData";
-import { ArrowRight } from "./icons/ArrowRight";
 
 export const StyledInstructions = styled.div`
   opacity: 0;
@@ -23,12 +22,26 @@ export const StyledInstructions = styled.div`
     align-content: center;
     gap: 24px;
   }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    button {
+      text-transform: none;
+    }
+  }
 `;
 
-export const Instructions = ({ onNext }: { onNext: () => void }) => {
+export const Instructions = ({
+  onNext,
+}: {
+  onNext: (order: "set" | "random") => void;
+}) => {
   const { lang } = useContext(AppContext);
 
-  function handleOnClick() {
+  function handleOnClick(value: "set" | "random") {
     gsap
       .timeline()
       .to("#instructions", {
@@ -46,7 +59,7 @@ export const Instructions = ({ onNext }: { onNext: () => void }) => {
         "<"
       )
       .to({}, { duration: 0.5 })
-      .then(() => onNext());
+      .then(() => onNext(value));
   }
 
   useEffect(() => {
@@ -63,10 +76,16 @@ export const Instructions = ({ onNext }: { onNext: () => void }) => {
         <p>{languageData.instructions1[lang]}</p>
         <p>{languageData.instructions2[lang]}</p>
         <p>{languageData.instructions3[lang]}</p>
+        <p>{languageData.order[lang]}</p>
       </section>
-      <button onClick={handleOnClick}>
-        <ArrowRight />
-      </button>
+      <div className="wrapper">
+        <button onClick={() => handleOnClick("set")}>
+          {languageData.orderSet[lang]}
+        </button>
+        <button onClick={() => handleOnClick("random")}>
+          {languageData.orderRandom[lang]}
+        </button>
+      </div>
     </StyledInstructions>
   );
 };

@@ -35,4 +35,16 @@ export const languageData = {
     it: "L'esperimento ha acquisito una grande popolarità quando la rubrica 'Modern Love' del New York Times ha pubblicato un articolo nel 2015 scritto da Mandy Len Catron, che raccontava la sua esperienza con le 36 domande ad un appuntamento con l'uomo che è poi diventato suo marito.",
     en: "The experiment became massively popular after the New York Times Modern Love column published an essay by Mandy Len Catron in 2015 about her experience trying the questions with an acquaintance whom she went on to marry.",
   },
+  order: {
+    it: "Scegli come desideri che le domande vengano presentate durante la tua esperienza con l'app:",
+    en: "Choose how you would like the questions to be presented during your experience with the app:",
+  },
+  orderRandom: {
+    it: "Ordine Casuale",
+    en: "Random Order",
+  },
+  orderSet: {
+    it: "Ordine Predefinito",
+    en: "Set Order",
+  },
 };

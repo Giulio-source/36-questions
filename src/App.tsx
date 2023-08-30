@@ -10,6 +10,7 @@ import { LanguagePicker } from "./components/LanguagePicker";
 import { Question } from "./components/Question";
 import { AppContext } from "./context/AppContext";
 import { questions } from "./data/questionsData";
+import { shuffleNumbers } from "./utils";
 
 function App() {
   const [step, setStep] = useState<
@@ -22,8 +23,10 @@ function App() {
   >("cover");
   const [index, setIndex] = useState(0);
   const [message, setMessage] = useState("");
+  const [order, setOrder] = useState<"set" | "random">();
+  const [questionsOrder, setQuestionsOrder] = useState<number[]>();
 
-  const { lang } = useContext(AppContext);
+  const { lang, onChangeLang } = useContext(AppContext);
 
   function onNext() {
     setIndex((prev) => (prev += 1));
@@ -40,6 +43,9 @@ function App() {
   function startOver() {
     setIndex(0);
     setStep("cover");
+    setOrder(undefined);
+    setQuestionsOrder(undefined);
+    onChangeLang("en");
   }
 
   useEffect(() => {
@@ -47,15 +53,24 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (index !== undefined && lang && step === "question") {
-      if (index >= 35) {
+    if (!order) return;
+    if (order === "set") {
+      setQuestionsOrder(Array.from({ length: 36 }, (_, index) => index));
+    } else {
+      setQuestionsOrder(shuffleNumbers());
+    }
+  }, [order]);
+
+  useEffect(() => {
+    if (index !== undefined && lang && step === "question" && questionsOrder) {
+      if (index >= 1) {
         setStep("end-game");
       } else {
-        const nextMessage = questions[index][lang];
+        const nextMessage = questions[questionsOrder[index]][lang];
         setMessage(nextMessage);
       }
     }
-  }, [index, lang, step]);
+  }, [index, lang, step, questionsOrder]);
 
   return (
     <StyledApp id="app">
@@ -67,7 +82,12 @@ function App() {
         <Introduction onNext={() => setStep("instructions")} />
       )}
       {step === "instructions" && (
-        <Instructions onNext={() => setStep("question")} />
+        <Instructions
+          onNext={(order: "set" | "random") => {
+            setStep("question");
+            setOrder(order);
+          }}
+        />
       )}
       {step === "question" && (
         <Question
