@@ -35,6 +35,9 @@ function App() {
   function onPrev() {
     if (index === 0) {
       setStep("language");
+      setOrder(undefined);
+      setQuestionsOrder(undefined);
+      onChangeLang("en");
       return;
     }
     setIndex((prev) => (prev -= 1));
@@ -91,7 +94,7 @@ function App() {
       )}
       {step === "question" && (
         <Question
-          message={message}
+          questionIndex={questionsOrder && questionsOrder[index]}
           questionNumber={index + 1}
           onNext={onNext}
           onPrev={onPrev}

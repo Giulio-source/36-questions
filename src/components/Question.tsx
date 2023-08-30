@@ -1,6 +1,8 @@
 import gsap from "gsap";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
+import { AppContext } from "../context/AppContext";
+import { questions } from "../data/questionsData";
 import { ArrowLeft } from "./icons/ArrowLeft";
 import { ArrowRight } from "./icons/ArrowRight";
 
@@ -48,16 +50,18 @@ const StyledNavigation = styled.div`
 `;
 
 export const Question = ({
-  message,
+  questionIndex,
   questionNumber,
   onNext,
   onPrev,
 }: {
-  message: string;
+  questionIndex: number | undefined;
   questionNumber: number;
   onNext: () => void;
   onPrev: () => void;
 }) => {
+  const { lang } = useContext(AppContext);
+
   function handleOnNext() {
     gsap
       .timeline()
@@ -83,6 +87,7 @@ export const Question = ({
   }
 
   useEffect(() => {
+    if (questionIndex === undefined) return;
     gsap
       .timeline()
       .add("start")
@@ -90,7 +95,7 @@ export const Question = ({
         "#question-container",
         { text: "", autoAlpha: 1 },
         {
-          text: { value: message, speed: 1 },
+          text: { value: questions[questionIndex][lang], speed: 1 },
           ease: "none",
         },
         "start"
@@ -120,7 +125,7 @@ export const Question = ({
         },
         "start"
       );
-  }, [message]);
+  }, [questionIndex, lang]);
 
   return (
     <StyledQuestionWrapper>
