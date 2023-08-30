@@ -63,7 +63,7 @@ function App() {
 
   useEffect(() => {
     if (index !== undefined && lang && step === "question" && questionsOrder) {
-      if (index >= 1) {
+      if (index >= 36) {
         setStep("end-game");
       } else {
         const nextMessage = questions[questionsOrder[index]][lang];
